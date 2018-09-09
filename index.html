@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<link rel="shortcut icon" href="https://www.cityblock.com/static/favicon-32x32.png" />
+
+	<title>Demo Heatmap</title>
+
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<link rel="stylesheet" href="./reset.css">
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+
+	<style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+
+</head>
+
+<body>
+
+	<div id='map'></div>
+
+
+  <!-- Load dummy data, including jitter effect !-->
+	<script>	
+		
+	function jitter(x){ return (Math.random()-0.5)/1000+x;}	
+
+	function staff_location_json(){
+		return {
+		  "type": "FeatureCollection",
+		  "features": [
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Brian",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.93354601),
+		          jitter(40.65763366)
+		        ]
+		      }
+		    },
+
+		     {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Caroline",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.94348597),
+		          jitter(40.65841066)
+		        ]
+		      }
+		    },
+		 
+
+			{
+		      "type": "Feature",
+		      "properties": {
+		        "name": "David",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.96108692),
+		          jitter(40.68235507)
+		        ]
+		      }
+		    },
+
+		 	{
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Stephanie",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.93560818),
+		          jitter(40.66510137)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Laura",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.95649626),
+		          jitter(40.67635309)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Kate",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		          jitter(-73.92949767),
+		          jitter(40.66943762)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Ben",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.95827045),
+		          jitter(40.65707045)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Max",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.92965065),
+		          jitter(40.66586202)
+		        ]
+		      }
+		    },
+
+		   {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Mikayla",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.95675277),
+		          jitter(40.65912834)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Rose",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.96072205),
+		          jitter(40.66338498)
+		        ]
+		      }
+		    },
+		 
+		     {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Hannah",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.95654055),
+		          jitter(40.68264706)
+		        ]
+		      }
+		    },
+		 
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Sean",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		            jitter(-73.9496626),
+		          jitter(40.66050916)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Adam",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.9312906),
+		          jitter(40.66667739)
+		        ]
+		      }
+		    },
+		 
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Alex",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.93934978),
+		          jitter(40.66894757)
+		        ]
+		      }
+		    },
+		 
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Rob",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		            jitter(-73.94458039),
+		          jitter(40.67556262)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Shaina",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.98415442),
+		          jitter(40.63431438)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Nworah",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.94254093),
+		          jitter(40.63398947)
+		        ]
+		      }
+		    },
+
+		 
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Leslie",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.93511096),
+		          jitter(40.67434391)
+		        ]
+		      }
+		    },
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Toyah",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.89567824),
+		          jitter(40.6662703)
+		        ]
+		      }
+		    },
+
+		 
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Kelsey",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		           jitter(-73.98252784),
+		          jitter(40.69647539)
+		        ]
+		      }
+		    },
+
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Wilson",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		            jitter(-73.89633145),
+		          jitter(40.66728766)
+		        ]
+		      }
+		    },
+
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Shen Tu",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		            jitter(-73.97699248),
+		          jitter(40.66401095)
+		        ]
+		      }
+		    },
+
+
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "name": "Harmony",
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [
+		            jitter(-73.92105924),
+		          jitter(40.68053014)
+		        ]
+		      }
+		    }   
+		]};
+	}
+	</script>
+	
+	<script>
+
+		// Load map
+		mapboxgl.accessToken = 'pk.eyJ1IjoiYmF5Z3Jvc3MiLCJhIjoiY2psdjkzM3VrMHJseDNwbzZkajZqYXlpaCJ9.yJfRy1_dcN82M2Yxr0ZQNQ';
+		var map = new mapboxgl.Map({
+		    container: 'map',
+		    style: 'mapbox://styles/baygross/cjlv9ljcl2c0y2slh8pb5sxpm',
+		    pitch: 45,
+		    center: [-73.95, 40.665], // starting position
+    		zoom: 12.6 // starting zoom
+		});
+
+		// Load CBH icon
+		map.on('load', function() {
+		    map.loadImage('https://github.com/baygross/cityblock-demo-fleetmap/mark_shadow.png', function(error, image) {
+		        if (error) throw error;
+		        map.addImage('cat', image);
+		        map.addLayer({
+		            "id": "points",
+		            "type": "symbol",
+		            "source": {
+		                "type": "geojson",
+		                "data": {
+		                    "type": "FeatureCollection",
+		                    "features": [{
+		                        "type": "Feature",
+		                        "geometry": {
+		                            "type": "Point",
+		                            "coordinates": [-73.953, 40.670]
+		                        }
+		                    }]
+		                }
+		            },
+		            "layout": {
+		                "icon-image": "cat",
+		                "icon-size": 0.20
+		            }
+		        });
+		    });
+		});
+
+
+		// Load Heatmap
+		map.on('load', function(){
+
+		  map.addSource('staff_locations', {
+      	type: 'geojson',
+    		data: staff_location_json()
+  		});
+
+		  map.addLayer({
+			  id: 'staff-heat',
+			  type: 'heatmap',
+			  source: 'staff_locations',
+			  paint: {
+			    'heatmap-weight': 0.5,
+			    'heatmap-intensity': 2,
+			    'heatmap-color': [
+			      'interpolate',
+			      ['linear'],
+			      ['heatmap-density'],
+			      0, 'rgba(41, 98, 255, 0)',
+			      1, 'rgba(41, 98, 255, 1)'
+			    ],
+			    'heatmap-radius': 150,
+			    'heatmap-opacity': 0.47
+			  }
+			}, 'waterway-label');
+
+			map.addLayer({
+			  id: 'staff_points',
+			  type: 'circle',
+			  source: 'staff_locations',
+			  paint: {
+			    // increase the radius of the circle as the zoom level and dbh value increases
+			    'circle-radius': 6,
+			    'circle-color': '#2962FF',
+			    'circle-stroke-color': '#0044ff',
+			    'circle-stroke-width': 0.5,
+			    'circle-opacity': 1
+			    }
+			}, 'waterway-label');
+
+/*			map.addLayer({
+        id: "staff-labels",
+        type: "symbol",
+        source: "staff_locations",
+        layout: {
+            "text-field": "{name}",
+            "text-font": ["Roboto Thin"],
+            "text-anchor": "top",
+            "text-offset":[0,2],
+            "text-size": 8
+        }
+    });    */
+
+		 // update map every x milliseconds
+      var timer = window.setInterval(function() {
+          map.getSource('staff_locations').setData(staff_location_json());
+      }, 2000);
+
+
+		});
+
+
+
+		
+	</script>
+
+</body>
+</html>
+
+
+
+
+
